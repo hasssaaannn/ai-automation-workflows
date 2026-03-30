@@ -1,0 +1,456 @@
+{
+  "name": "Automate Customer Support Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "This workflow automates customer support by processing incoming requests from email or chat, analyzing them with AI, retrieving relevant context, and generating draft responses for review by support agents.\n\nKey Features\n\t•\tMulti-channel Input: Handles both email and chat requests\n\t•\tAI-driven Analysis: Detects sentiment, urgency, and key details in messages\n\t•\tContext Integration: Uses product manuals, ERP data, and support history to enhance accuracy\n\t•\tDraft Response Generation: Produces professional responses in German\n\t•\tHuman-in-the-Loop: Ensures agent review and approval before replies are sent\n\nDemo Instructions\n\t1.\tUse the chat interface to test sample customer queries\n\t2.\tSend test emails to activate the email workflow\n\t3.\tObserve how AI analyzes requests and generates contextual responses\n\nHere’s a rewritten professional version of your workflow description without emojis, making it clean, structured, and ready for documentation or client-facing material:\n\n⸻\n\nEmail Trigger\n\nPurpose: Monitors Gmail for incoming customer support requests.\n\nHow it works:\n\t•\tPolls Gmail every minute for new emails\n\t•\tAllows filtering by labels or other criteria\n\t•\tExtracts email body, sender details, and metadata\n\nDemo tip: Send a test email to observe the process.\n\n⸻\n\nAI Information Extractor\n\nPurpose: Uses AI to analyze customer messages and convert them into structured data.\n\nExtracted details:\n\t•\tCategory (technical, billing, sales, etc.)\n\t•\tUrgency level (low, medium, high, critical)\n\t•\tCustomer sentiment\n\t•\tKeywords for context search\n\t•\tProduct identifiers\n\t•\tRequired action type\n\nModel used: OpenAI GPT-4o-mini\n\n⸻\n\nHistorical Support Data\n\nPurpose: Provides context from past interactions to improve response quality.\n\nData source: Google Sheets with historical cases.\n\nIncludes:\n\t•\tPrevious questions and answers\n\t•\tCommon issues and solutions\n\t•\tResponse templates\n\t•\tProduct-specific guidance\n\nBenefit: Ensures consistency and accuracy in responses.\n\n⸻\n\nResponse Generation\n\nPurpose: Generates professional responses to customer queries using AI.\n\nModel used: OpenAI GPT-4o-mini\n\nInput context:\n\t•\tOriginal customer message\n\t•\tExtracted data (sentiment, urgency, etc.)\n\t•\tProduct manual content\n\t•\tHistorical support records\n\t•\tERP data (pricing, availability)\n\nOutput: Draft customer response in German, aligned with company standards.\n\n⸻\n\nHuman-in-the-Loop Approval\n\nPurpose: Maintains quality control before responses are sent.\n\nProcess:\n\t1.\tAI generates draft response\n\t2.\tSupport agent reviews the draft\n\t3.\tAgent approves, modifies, or rejects the response\n\t4.\tOnly approved responses are sent to the customer\n\nBenefits:\n\t•\tGuarantees quality assurance\n\t•\tProvides feedback loop for AI improvement\n\t•\tSupports compliance with regulations\n\n⸻\n\nProduct Knowledge Base\n\nPurpose: Supplies AI with accurate product documentation.\n\nData source: Google Drive (Primotech Manual PDF).\n\nIncludes:\n\t•\tTechnical specifications\n\t•\tOperating instructions\n\t•\tTroubleshooting guides\n\t•\tSafety documentation\n\nProcessing: Extracts text from PDF for AI access.\n\nCloud advantage: Always uses the most up-to-date documentation.\n\n⸻\n\nERP System Integration\n\nPurpose: Adds real-time customer and product data to responses.\n\nData source: Mock ERP API (for demo purposes).\n\nProvides:\n\t•\tCustomer account details\n\t•\tOrder history\n\t•\tProduct availability\n\t•\tSpare part pricing\n\nProduction note: Can be integrated with a live ERP system.\n\nCloud benefit: Ensures up-to-date data in every interaction.",
+        "height": 3432,
+        "width": 450,
+        "color": 3
+      },
+      "id": "48802b1f-a983-4e55-885b-b0aa71832fe9",
+      "name": "📋 Workflow Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1eQgTRiClAi94AHf3-vn358Ze3zwTZig0MdiBBUCBUuc",
+          "mode": "list",
+          "cachedResultName": "NexaCare Support Knowledge Base",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eQgTRiClAi94AHf3-vn358Ze3zwTZig0MdiBBUCBUuc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eQgTRiClAi94AHf3-vn358Ze3zwTZig0MdiBBUCBUuc/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "b797ec9f-6017-4a6a-be8c-777656383c4a",
+      "name": "📊 Historical Support Cases",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1440,
+        784
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "k2J2Rz3W2kBQCzOB",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "e1f36068-4dc3-4bb0-b0a0-c636aeb7736f",
+      "name": "📋 Aggregate Support Data",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        1728,
+        784
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1qCecmGawWQuW-F6oplu7Pd4fD9cJMBEa",
+          "mode": "list",
+          "cachedResultName": "NexaCare Service Manual",
+          "cachedResultUrl": "https://drive.google.com/file/d/1qCecmGawWQuW-F6oplu7Pd4fD9cJMBEa/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "id": "582fcb64-78fb-471b-84dd-2dccb5251966",
+      "name": "📚 Download Product Manual",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        1968,
+        784
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "G47nGekQsa8sB3fM",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "e03a0f00-d2dc-4669-9e71-203767211613",
+      "name": "📄 Extract PDF Content",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        2192,
+        784
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://run.mocky.io/v3/d8892875-55d6-449d-bab3-3cb7a7b419c0",
+        "options": {}
+      },
+      "id": "a528cc6d-460b-4107-a53e-a35518c1d391",
+      "name": "🏢 Check ERP System",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2720,
+        512
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a smart, human-like customer support assistant for NexaCare Technologies, a company specializing in device repair and IT support services.\n\nYour goal is to help customers troubleshoot issues, answer questions, and guide them toward solutions in a natural, conversational way — like a real support chat agent (not an email bot).\n\n---\n\nDATA SOURCES:\n\n1. Service Manual:\n{{ $('📄 Extract PDF Content').item.json.text }}\n\n2. Historical Support Data:\n{{ $('📋 Aggregate Support Data').item.json.data.toJsonString() }}\n\n3. Customer Message:\n{{ $('Prepare Input').item.json.customerMessage }}\n\n4. ERP Data:\nCustomer: {{ JSON.stringify($('Code in JavaScript').item.json.customer) }}\nOrders: {{ JSON.stringify($('Code in JavaScript').item.json.orders) }}\nInventory: {{ JSON.stringify($('Code in JavaScript').item.json.inventory) }}\n\n5. Conversation Context:\n{{ $json.isFirstMessage ? \"FIRST_MESSAGE\" : \"FOLLOW_UP\" }}\n\n---\n\nCORE BEHAVIOR:\n\n- Always understand the customer’s latest message first\n- Respond naturally like a real human in chat\n- Keep responses clear, helpful, and to the point\n- Do NOT sound like an email unless it's the first interaction\n- Do NOT repeat the same instructions again and again\n- Progress the conversation step-by-step\n\n---\n\nCONVERSATION MODES:\n\n1) FIRST MESSAGE:\n\nOnly for the very first interaction.\n\n- Greet the customer politely\n- Briefly acknowledge the issue\n- Provide 2–4 helpful troubleshooting steps\n- Keep it structured but still natural\n- Do NOT be overly long or robotic\n\n2) FOLLOW-UP MESSAGES:\n\nFor all subsequent messages:\n\n- DO NOT use greetings like \"Dear Customer\"\n- DO NOT repeat introduction or company name\n- DO NOT use email-style formatting or signatures\n- Respond conversationally, like a live chat agent\n- Focus only on the latest user message\n- Ask relevant follow-up questions when needed\n- Give next-step troubleshooting (not full reset every time)\n\n---\n\nTONE & STYLE:\n\n- Friendly, calm, and professional\n- Light empathy (only when appropriate)\n- Avoid robotic or scripted language\n- Use simple, clear wording\n- Keep responses short to medium length\n\nGood example:\n\"Okay, that helps. When you plug in the charger, do you see any indicator light turning on?\"\n\nBad example:\n\"Dear Customer, Thank you for reaching out...\"\n\n---\n\nUSE OF DATA:\n\n- Use Service Manual and Historical Data when helpful\n- Use ERP data ONLY if directly relevant\n- NEVER invent orders, pricing, or details\n- If unsure, ask a clarifying question instead of guessing\n\n---\n\nTROUBLESHOOTING RULES:\n\n- Do NOT dump all steps at once repeatedly\n- Give steps gradually based on conversation progress\n- Adjust advice based on what the user already tried\n- Avoid repeating the same suggestions unless necessary\n\n---\n\nESCALATION:\n\nIf the issue cannot be resolved:\n\n- Suggest diagnostic service naturally (not forcefully)\n- Example:\n  \"If this still doesn’t work, it might need a quick diagnostic check to pinpoint the issue.\"\n\n---\n\nSTRICT RULES:\n\n- Do NOT use email format in follow-ups\n- Do NOT repeat previous responses\n- Do NOT output JSON\n- Do NOT mention internal systems or data sources\n- Always respond if the message is understandable\n\n---\n\nFAIL ONLY IF:\n\nCustomer message is empty or completely unclear.\n\nThen output:\n⚠️ Insufficient information to generate response. Please review manually."
+      },
+      "id": "a01ba2df-ec79-431f-bfdb-c37b84911904",
+      "name": "🤖 Generate Customer Response",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        2976,
+        784
+      ],
+      "typeVersion": 1.6,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"reply\": \"{{ $json.text }}\"\n}",
+        "options": {}
+      },
+      "id": "59ff8f22-b08d-46ed-874e-a509ed337f98",
+      "name": "📝 Format Chat Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        3408,
+        784
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.body.message }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"category\", \"urgency\", \"sentiment\", \"keywords\", \"productIdentifiers\", \"customerInfo\", \"requiredAction\"],\n  \"properties\": {\n    \"category\": {\n      \"type\": \"string\",\n      \"enum\": [\"technical\", \"billing\", \"sales\", \"returns\", \"general\"],\n      \"description\": \"The primary category of the customer request\"\n    },\n    \"urgency\": {\n      \"type\": \"string\",\n      \"enum\": [\"low\", \"medium\", \"high\", \"critical\"],\n      \"description\": \"How time-sensitive the request is\"\n    },\n    \"sentiment\": {\n      \"type\": \"string\",\n      \"enum\": [\"positive\", \"neutral\", \"negative\", \"very_negative\"],\n      \"description\": \"The emotional tone of the customer's message\"\n    },\n    \"keywords\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"description\": \"Key terms extracted from the request for searching knowledge base and ERP\"\n    },\n    \"productIdentifiers\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"type\": {\n            \"type\": \"string\",\n            \"enum\": [\"model\", \"serial\", \"part\"]\n          },\n          \"value\": {\n            \"type\": \"string\"\n          }\n        }\n      },\n      \"description\": \"Any product numbers, models, or parts mentioned in the request\"\n    },\n    \"customerInfo\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"firstName\": {\n          \"type\": \"string\"\n        },\n        \"lastName\": {\n          \"type\": \"string\"\n        },\n        \"customerId\": {\n          \"type\": \"string\",\n          \"description\": \"CRM Customer Id\"\n        },\n        \"mentionsCompetitor\": {\n          \"type\": \"boolean\",\n          \"description\": \"Customer references a competitor product or service\"\n        }\n      }\n    },\n    \"requiredAction\": {\n      \"type\": \"string\",\n      \"enum\": [\"information\", \"replacement\", \"refund\", \"repair\", \"callback\", \"escalation\"],\n      \"description\": \"The primary action needed to resolve the customer's request\"\n    }\n  }}",
+        "options": {}
+      },
+      "id": "ddedfc1f-51a8-4332-93b8-e23129b0e37f",
+      "name": "AI Information Extractor",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "position": [
+        944,
+        784
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"customers\": [\n    {\n      \"email\": \"john@example.com\",\n      \"name\": \"John Smith\",\n      \"customerId\": \"NC-10234\",\n      \"orders\": [\n        {\n          \"orderId\": \"NC-5001\",\n          \"device\": \"Dell XPS 15\",\n          \"status\": \"In Repair\",\n          \"estimatedCompletion\": \"2 days\"\n        }\n      ]\n    },\n    {\n      \"email\": \"sarah@example.com\",\n      \"name\": \"Sarah Johnson\",\n      \"customerId\": \"NC-20456\",\n      \"orders\": [\n        {\n          \"orderId\": \"NC-6001\",\n          \"device\": \"HP Spectre x360\",\n          \"status\": \"Completed\",\n          \"estimatedCompletion\": \"Ready for pickup\"\n        }\n      ]\n    }\n  ],\n  \"inventory\": [\n    {\n      \"partName\": \"Laptop Screen 15.6\\\"\",\n      \"price\": \"$180\",\n      \"availability\": \"In Stock\"\n    },\n    {\n      \"partName\": \"Battery Pack Model B-450\",\n      \"price\": \"$95\",\n      \"availability\": \"Limited Stock\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2432,
+        784
+      ],
+      "id": "6f3d0214-8964-471a-b06e-405729054239",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get email from API request instead of Gmail\nconst email = $('Webhook').first().json.body.customerEmail || \"\";\n\n// Get ERP data\nconst customers = $json.customers || [];\nconst inventory = $json.inventory || [];\n\n// Find matching customer\nconst matched = customers.find(c =>\n  email.toLowerCase().includes(c.email.toLowerCase())\n);\n\n// Fallback if not found\nconst customer = matched || {\n  name: \"Customer\",\n  customerId: \"Unknown\",\n  orders: []\n};\n\nreturn [\n  {\n    json: {\n      customer,\n      orders: customer.orders,\n      inventory\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2608,
+        784
+      ],
+      "id": "40bc7ce8-634c-408b-8f2c-51ffdd97f4f0",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c1631b5-2eb8-43df-8dde-546eb52c1f24",
+              "name": "customerMessage",
+              "value": "={{ $('Webhook').item.json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2784,
+        784
+      ],
+      "id": "6a987e32-095a-4cf1-a768-19db53156234",
+      "name": "Prepare Input"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        608,
+        784
+      ],
+      "id": "f75a4fe7-48f0-45d2-8655-eb87ce627ff6",
+      "name": "Webhook",
+      "webhookId": "44671616-f180-4bb7-82db-b3d63e5c05e2"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { reply: $json.reply } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3616,
+        784
+      ],
+      "id": "7f8c1702-1218-436f-aa73-5916fba93267",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        880,
+        992
+      ],
+      "id": "c177d0d6-3544-4b14-9ab9-51672e239e9e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "v0LLzgOnRVMkc26V",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        992
+      ],
+      "id": "df228be4-e0d9-43ef-a1a2-0149408d9617",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "v0LLzgOnRVMkc26V",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "📊 Historical Support Cases",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📄 Extract PDF Content": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📋 Aggregate Support Data": {
+      "main": [
+        [
+          {
+            "node": "📚 Download Product Manual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📚 Download Product Manual": {
+      "main": [
+        [
+          {
+            "node": "📄 Extract PDF Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📊 Historical Support Cases": {
+      "main": [
+        [
+          {
+            "node": "📋 Aggregate Support Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prepare Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖 Generate Customer Response": {
+      "main": [
+        [
+          {
+            "node": "📝 Format Chat Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Prepare Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Input": {
+      "main": [
+        [
+          {
+            "node": "🤖 Generate Customer Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📝 Format Chat Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "🤖 Generate Customer Response",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "cb8c4689-7f3f-43b3-b9c1-28dc83fa9bda",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d8d795a53ec79299d6e71463be8aa8035b1383bdceead07c118cfb8e4cd0cea2"
+  },
+  "id": "21SRggBN33nKNtSi",
+  "tags": []
+}
